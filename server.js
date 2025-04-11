@@ -1,37 +1,58 @@
+// server.js met websockets
 const express = require('express');
-const app = express();
-const port = 3000;
+const path = require('path');
+const http = require('http');
+const WebSocket = require('ws');
 
-// Startscore
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
 let score = { red: 0, blue: 0 };
 
-// Gebruik de 'public' map voor frontend
-app.use(express.static('public'));
-
-// Zorg dat we JSON kunnen ontvangen
+// Statische bestanden serveren uit /public
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-// Geef huidige score terug
+// WebSocket broadcast functie
+function broadcast(data) {
+    const json = JSON.stringify(data);
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(json);
+        }
+    });
+}
+
+// REST API
 app.get('/api/score', (req, res) => {
     res.json(score);
 });
 
-// Verhoog score van team
 app.post('/api/score', (req, res) => {
     const { team } = req.body;
     if (team === 'red' || team === 'blue') {
         score[team]++;
+        broadcast({ type: 'scoreUpdate', score });
     }
     res.json(score);
 });
 
-// Reset score
 app.post('/api/reset', (req, res) => {
     score = { red: 0, blue: 0 };
+    broadcast({ type: 'scoreUpdate', score });
     res.json(score);
 });
 
-// Start de server
-app.listen(port, () => {
-    console.log(`Server draait op http://localhost:${port}`);
+// Dummy websocket updates zolang backend er nog niet is
+setInterval(() => {
+    score.red = Math.floor(Math.random() * 10);
+    score.blue = Math.floor(Math.random() * 10);
+    broadcast({ type: 'scoreUpdate', score });
+}, 3000); // elke 3 seconden
+
+// Start server
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server draait op http://localhost:${PORT}`);
 });

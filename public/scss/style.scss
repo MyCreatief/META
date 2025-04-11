@@ -1,8 +1,125 @@
-$primary-color: #2980b9;
+// 🎨 Kleuren gebaseerd op de voetbaltafel-afbeelding
+$background: #0d1017;
+$panel: #2c3542;
+$red: #e83b33;
+$blue: #2177e6;
+$light: #d5e6f8;
+
+$font-main: 'Orbitron', sans-serif;
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
-  background: lighten($primary-color, 40%);
+  background-color: $background;
+  color: $light;
+  font-family: $font-main;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
 }
-h1 {
-  color: $primary-color;
+
+.scoreboard {
+  background: $panel;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 60px rgba(0, 191, 255, 0.2);
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 90%;
+  max-width: 1200px;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid lighten($panel, 10%);
+  transition: all 0.3s ease-in-out;
+}
+
+.team {
+  flex: 1;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    color: $light;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  }
+
+  .players {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .player {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+      padding: 0.3rem;
+      border-radius: 4px;
+      background-color: rgba(255,255,255,0.05);
+    }
+  }
+
+  &.left .player {
+    color: $red;
+    text-shadow: 0 0 5px $red;
+  }
+
+  &.right .player {
+    color: $blue;
+    text-shadow: 0 0 5px $blue;
+  }
+}
+
+.middle {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .timer {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: $light;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .score {
+    font-size: 4rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+  }
+
+  .topscorer {
+    font-size: 1rem;
+    color: $light;
+    font-style: italic;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@media (max-width: 768px) {
+  .scoreboard {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .middle .score {
+    font-size: 2.5rem;
+  }
 }

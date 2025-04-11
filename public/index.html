@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8" />
-    <title>Scoreteller</title>
+    <meta charset="UTF-8">
+    <title>Interactieve Voetbaltafel</title>
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-<h1>Scoreteller App</h1>
-<!-- inhoud van je webinterface -->
+<div class="scoreboard">
+    <div class="team left">
+        <h2>Team Rood</h2>
+        <ul class="players">
+            <li class="player">🔴 Speler 1</li>
+            <li class="player">🔴 Speler 2</li>
+        </ul>
+    </div>
+
+    <div class="middle">
+        <div class="timer">⏱ 00:00</div>
+        <div class="score" id="scoreDisplay">0 - 0</div>
+        <div class="topscorer">🌟 Topscorer: –</div>
+    </div>
+
+    <div class="team right">
+        <h2>Team Blauw</h2>
+        <ul class="players">
+            <li class="player">🔵 Speler 3</li>
+            <li class="player">🔵 Speler 4</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    const scoreEl = document.getElementById('scoreDisplay');
+
+    // Maak verbinding met WebSocket-server
+    const socket = new WebSocket(`ws://${location.host}`);
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'scoreUpdate') {
+            const score = data.score;
+            scoreEl.textContent = `${score.red} - ${score.blue}`;
+        }
+    };
+</script>
 </body>
 </html>

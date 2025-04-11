@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "scss": "sass --watch scss:public/css"
+    "scss": "sass --watch public/scss/style.scss:public/css/style.css",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "sass": "^1.58.0"
   },
   "dependencies": {
-    "express": "^4.18.0"
+    "express": "^4.18.0",
+    "ws": "^8.18.1"
   }
 }
