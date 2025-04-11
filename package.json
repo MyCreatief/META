@@ -1,0 +1,27 @@
+{
+  "name": "meta",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "scss": "sass --watch scss:public/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyCreatief/META.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MyCreatief/META/issues"
+  },
+  "homepage": "https://github.com/MyCreatief/META#readme",
+  "devDependencies": {
+    "sass": "^1.58.0"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}

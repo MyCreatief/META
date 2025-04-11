@@ -1,0 +1,8 @@
+$primary-color: #2980b9;
+body {
+  font-family: Arial, sans-serif;
+  background: lighten($primary-color, 40%);
+}
+h1 {
+  color: $primary-color;
+}
